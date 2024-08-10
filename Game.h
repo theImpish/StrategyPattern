@@ -1,6 +1,8 @@
 #pragma once
 #pragma once
 
+
+#include "Assets.h"
 #include "Entity.h"
 #include "EntityManager.h"
 
