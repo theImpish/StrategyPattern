@@ -1,24 +1,25 @@
 #pragma once
 #pragma once
 
-#include "Entity.h"
+#include "Missile.h"
 
 #include <memory>
 #include <vector>
 #include <string>
 #include <map>
 
-typedef std::vector<std::shared_ptr<Entity>> EntityVec;
-typedef std::map<std::string, EntityVec> EntityMap;
+
+typedef std::vector<std::shared_ptr<Missile>> MissileVec;
+typedef std::map<std::string, MissileVec> MissileMap;
 
 class EntityManager
 {
-	EntityVec m_entities;
-	EntityVec m_entitiesToAdd;
-	EntityMap m_entityMap;
-	size_t m_totalEntities = 0;
+	MissileVec m_missiles;
+	MissileVec m_missilesToAdd;
+	MissileMap m_missileMap;
+	size_t m_totalMissiles = 0;
 
-	void removeDeadEntities(EntityVec& vec);
+	void removeMissiles(MissileVec& vec);
 
 public:
 
@@ -26,8 +27,8 @@ public:
 
 	void update();
 
-	std::shared_ptr<Entity> addEntity(const std::string& tag);
+	std::shared_ptr<Missile> addMissile(const std::string& tag, const sf::Texture& texture, Vec2 pos);
 
-	const EntityVec& getEntities();
-	const EntityVec& getEntities(const std::string& tag);
+	const MissileVec& getMissiles();
+	const MissileVec& getMissiles(const std::string& tag);
 };

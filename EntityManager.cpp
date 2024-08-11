@@ -2,66 +2,56 @@
 
 EntityManager::EntityManager()
 {
-
 }
 
 void EntityManager::update()
 {
-	// TODO: add entities from m_entitiesToAdd the proper location(s)
-	//		 - add them to the vector ao all entities
-	//		 - add them to the vector inside the map, with the tag as a key
-	for (std::shared_ptr<Entity> e : m_entitiesToAdd)
+	for (std::shared_ptr<Missile> e : m_missilesToAdd)
 	{
-		m_entities.push_back(e);
-		m_entityMap[e->tag()].push_back(e);
+		m_missiles.push_back(e);
+		m_missileMap[e->m_tag].push_back(e);
 	}
 
-	m_entitiesToAdd.clear();
+	m_missilesToAdd.clear();
 
 	// remove dead entities from the vector of all entities
-	removeDeadEntities(m_entities);
+	removeMissiles(m_missiles);
 
 	// remove dead entities from each vector in the entity map
-	// C++17 way of iterating through [key,value] pairs in a map
-	for (auto& [tag, entityVec] : m_entityMap)
+	for (auto& [tag, missileVec] : m_missileMap)
 	{
-		removeDeadEntities(entityVec);
+		removeMissiles(missileVec);
 	}
 }
 
-void EntityManager::removeDeadEntities(EntityVec& vec)
+void EntityManager::removeMissiles(MissileVec& vec)
 {
 	vec.erase(
-		std::remove_if(vec.begin(), vec.end(), [](auto e) {return !e->isActive(); })
+		std::remove_if(vec.begin(), vec.end(), [](auto e) {return !e->m_isActive; })
 		, vec.end());
 }
-
-std::shared_ptr<Entity> EntityManager::addEntity(const std::string& tag)
+std::shared_ptr<Missile> EntityManager::addMissile(const std::string& tag, const sf::Texture& texture, Vec2 pos)
 {
-	auto entity = std::shared_ptr<Entity>(new Entity(m_totalEntities++, tag));
+	auto missile = std::shared_ptr<Missile>(new Missile(m_totalMissiles++, tag, texture, pos));
 
-	m_entitiesToAdd.push_back(entity);
+	m_missilesToAdd.push_back(missile);
 
-	return entity;
+	return missile;
+}
+const MissileVec& EntityManager::getMissiles()
+{
+	return m_missiles;
 }
 
-const EntityVec& EntityManager::getEntities()
+const MissileVec& EntityManager::getMissiles(const std::string& tag)
 {
-	return m_entities;
-}
-
-const EntityVec& EntityManager::getEntities(const std::string& tag)
-{
-	// TODO: this is incorrect, return the correct vector from the map
-
-	if (m_entityMap.find(tag) != m_entityMap.end())
+	if (m_missileMap.find(tag) != m_missileMap.end())
 	{
-		return m_entityMap.find(tag)->second;
+		return m_missileMap.find(tag)->second;
 	}
 	else
 	{
-		EntityVec empty;
+		MissileVec empty;
 		return empty;
 	}
-
 }

@@ -13,7 +13,9 @@ class Game
 	sf::RenderWindow m_window;
 	bool m_paused = false;
 	bool m_running = true;
-	EntityManager m_entities;
+	EntityManager m_entityManager;
+	Assets m_assets;
+
 
 	sf::Font m_font;
 	sf::Text m_text;
@@ -33,7 +35,7 @@ class Game
 
 	void sMovement();
 	void sUserInput();
-	void sRender();
+	void sRender(); 
 	void sEnemySpawner();
 	void sCollision();
 

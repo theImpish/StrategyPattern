@@ -10,6 +10,8 @@ Game::Game()
 
 void Game::init()
 {
+	m_assets;
+	
 	int width = 1280, height = 720, frameLimit = 0;
 	bool fullScreen = false;
 
@@ -26,7 +28,7 @@ void Game::run()
 {
 	while (m_running)
 	{
-		m_entities.update();
+		m_entityManager.update();
 
 		if (!m_paused)
 		{
@@ -49,7 +51,7 @@ void Game::setPaused()
 
 void Game::spawnPlayer()
 {
-
+	m_entityManager.addMissile("Small Blue", m_assets.getTexture("Small Blue"), Vec2(100,100));
 }
 
 void Game::spawnEnemy()
@@ -73,7 +75,7 @@ void Game::sEnemySpawner()
 {
 	//if (m_currentFrame - m_lastEnemySpawnTime > m_enemyConfig.SI)
 	//{
-		spawnEnemy();
+	spawnEnemy();
 	//}
 
 }
@@ -81,15 +83,16 @@ void Game::sEnemySpawner()
 void Game::sRender()
 {
 
-	m_window.clear();
+	m_window.clear(m_assets.getColour("Imperial red"));
 
 	//m_text = sf::Text("Score: " + std::to_string(m_score), m_font, m_fontConfig.S);
 	//m_text.setPosition(10, 10);
 	//m_window.draw(m_text);
 
-	for (auto e : m_entities.getEntities())
+	for (auto& m : m_entityManager.getMissiles())
 	{
-		//m_window.draw();
+		m->display(m_window);
+		//m_window.draw(m->getSprite());
 	}
 
 	m_window.display();
@@ -124,6 +127,7 @@ void Game::sUserInput()
 				break;
 			case sf::Keyboard::P:
 				setPaused();
+				break;
 			default: break;
 			}
 		}

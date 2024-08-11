@@ -7,17 +7,17 @@ Assets::Assets()
 	loadAssets();
 }
 
-sf::Font Assets::getFont(std::string name)
+const sf::Font& Assets::getFont(std::string name)
 {
 	return m_fonts.find(name)->second;
 }
 
-sf::Texture Assets::getTexture(std::string name)
+const sf::Texture& Assets::getTexture(std::string name)
 {
 	return m_texture.find(name)->second;
 }
 
-sf::Color Assets::getColours(std::string name)
+const sf::Color& Assets::getColour(std::string name)
 {
 	return m_colours.find(name)->second;
 }
@@ -27,9 +27,9 @@ void Assets::loadAssets()
 
 	std::map<std::string, std::string> fonts
 	{
-		 {"bold", "JetBrainsMonoNLNerdFont - Bold.ttf" }
-		,{"light", "JetBrainsMonoNLNerdFont - ExtraLight.ttf" }
-		,{"regular", "JetBrainsMonoNLNerdFont - Regular.ttf" }
+		 {"bold", "JetBrainsMonoNLNerdFont-Bold.ttf" }
+		,{"light", "JetBrainsMonoNLNerdFont-ExtraLight.ttf" }
+		,{"regular", "JetBrainsMonoNLNerdFont-Regular.ttf" }
 	};
 
 	for (const auto& [name, path] : fonts)

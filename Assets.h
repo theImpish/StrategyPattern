@@ -22,7 +22,7 @@ private:
 public:
 	Assets();
 
-	sf::Font getFont(std::string name);
-	sf::Texture getTexture(std::string name);
-	sf::Color getColours(std::string name);
+	const sf::Font& getFont(std::string name);
+	const sf::Texture& getTexture(std::string name);
+	const sf::Color& getColour(std::string name);
 };
