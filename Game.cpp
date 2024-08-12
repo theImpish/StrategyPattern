@@ -5,6 +5,7 @@
 
 Game::Game()
 {
+	m_entityManager = std::make_shared<EntityManager>(this);
 	init();
 }
 
@@ -28,7 +29,7 @@ void Game::run()
 {
 	while (m_running)
 	{
-		m_entityManager.update();
+		m_entityManager->update();
 
 		if (!m_paused)
 		{
@@ -51,7 +52,7 @@ void Game::setPaused()
 
 void Game::spawnPlayer()
 {
-	m_entityManager.addMissile("Small Blue", m_assets.getTexture("Small Blue"), Vec2(100,100));
+	m_entityManager->addMissile("Small Blue", m_assets.getTexture("Small Blue"), Vec2(100,100));
 }
 
 void Game::spawnEnemy()
@@ -59,12 +60,10 @@ void Game::spawnEnemy()
 
 }
 
-
 void Game::sMovement()
 {
 
 }
-
 
 void Game::sCollision()
 {
@@ -89,7 +88,7 @@ void Game::sRender()
 	//m_text.setPosition(10, 10);
 	//m_window.draw(m_text);
 
-	for (auto& m : m_entityManager.getMissiles())
+	for (auto& m : m_entityManager->getMissiles())
 	{
 		m->display(m_window);
 		//m_window.draw(m->getSprite());
@@ -127,6 +126,8 @@ void Game::sUserInput()
 				break;
 			case sf::Keyboard::P:
 				setPaused();
+			case sf::Keyboard::R:
+				m_entityManager->getMissiles()[0]->drawRectangle();
 				break;
 			default: break;
 			}
@@ -166,6 +167,16 @@ void Game::sUserInput()
 		}
 
 	}
+
 }
 
+Assets& Game::getAssets()
+{
+	return m_assets;
+}
+
+sf::RenderWindow& Game::getRenderWindow()
+{
+	return m_window;
+}
 

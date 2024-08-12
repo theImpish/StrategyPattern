@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-EntityManager::EntityManager()
+EntityManager::EntityManager(Game* game) : m_game(game)
 {
 }
 
@@ -32,7 +32,7 @@ void EntityManager::removeMissiles(MissileVec& vec)
 }
 std::shared_ptr<Missile> EntityManager::addMissile(const std::string& tag, const sf::Texture& texture, Vec2 pos)
 {
-	auto missile = std::shared_ptr<Missile>(new Missile(m_totalMissiles++, tag, texture, pos));
+	auto missile = std::shared_ptr<Missile>(new Missile(m_game, m_totalMissiles++, tag, texture, pos));
 
 	m_missilesToAdd.push_back(missile);
 

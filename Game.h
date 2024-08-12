@@ -8,12 +8,13 @@
 
 #include <SFML/Graphics.hpp>
 
+
 class Game
 {
 	sf::RenderWindow m_window;
 	bool m_paused = false;
 	bool m_running = true;
-	EntityManager m_entityManager;
+	std::shared_ptr<EntityManager> m_entityManager = nullptr;
 	Assets m_assets;
 
 
@@ -35,7 +36,8 @@ class Game
 
 	void sMovement();
 	void sUserInput();
-	void sRender(); 
+	void sRender();
+
 	void sEnemySpawner();
 	void sCollision();
 
@@ -48,4 +50,7 @@ public:
 	Game();
 
 	void run();
+
+	Assets& getAssets();
+	sf::RenderWindow& getRenderWindow();
 };

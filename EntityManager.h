@@ -2,15 +2,20 @@
 #pragma once
 
 #include "Missile.h"
+#include "Game.h"
+#include "Vec2.h"
 
 #include <memory>
 #include <vector>
 #include <string>
 #include <map>
 
+class Missile;
+class Game;
 
 typedef std::vector<std::shared_ptr<Missile>> MissileVec;
 typedef std::map<std::string, MissileVec> MissileMap;
+
 
 class EntityManager
 {
@@ -21,9 +26,11 @@ class EntityManager
 
 	void removeMissiles(MissileVec& vec);
 
+	Game* m_game = nullptr;
+
 public:
 
-	EntityManager();
+	EntityManager(Game* game);
 
 	void update();
 
