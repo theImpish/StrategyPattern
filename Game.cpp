@@ -61,6 +61,7 @@ void Game::spawnPlayer()
 	m_entityManager->addMissile(std::make_shared<MissileRed>(m_assets.getTexture("Medium Red")
 		, sf::Color(Game_Colours::TIMBERWOLF)
 		, m_entityManager->m_totalMissiles++));
+
 	
 }
 
@@ -71,7 +72,7 @@ void Game::spawnEnemy()
 
 void Game::sMovement()
 {
-
+	//m_entityManager->getMissiles("Missile Blue")[0]->setPosition(Vec2(100, 100));
 }
 
 void Game::sCollision()
@@ -90,17 +91,11 @@ void Game::sEnemySpawner()
 
 void Game::sRender()
 {
-
 	m_window.clear(sf::Color(Game_Colours::IMPERIAL_RED));
-
-	//m_text = sf::Text("Score: " + std::to_string(m_score), m_font, m_fontConfig.S);
-	//m_text.setPosition(10, 10);
-	//m_window.draw(m_text);
 
 	for (auto& m : m_entityManager->getMissiles())
 	{
 		m->render(m_window);
-		//m_window.draw(m->getSprite());
 	}
 
 	m_window.display();

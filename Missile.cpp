@@ -3,8 +3,10 @@
 Missile::Missile(const sf::Texture& texture, const sf::Color& colour, size_t id)
 	:m_texture(texture), m_colour(colour), m_id(id)
 {
-
+	init();
 }
+
+Missile::Missile() {}
 
 void Missile::init()
 {
@@ -52,6 +54,11 @@ void Missile::select()
 void Missile::deselect()
 {
 	m_drawRectangle = false;
+}
+
+const sf::Sprite& Missile::getSprite()
+{
+	return m_sprite;
 }
 
 const std::string Missile::getType()

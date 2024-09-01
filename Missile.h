@@ -20,7 +20,7 @@ private:
 
 	size_t m_id = 0;
 	
-	bool m_drawRectangle = true;
+	bool m_drawRectangle = false;
 	bool m_isActive = true;
 
 public:
@@ -31,6 +31,7 @@ private:
 	void initSelector();
 public:
 
+	Missile();
 	Missile(const sf::Texture& texture, const sf::Color& colour, size_t id);
 
 	void init();
@@ -39,6 +40,8 @@ public:
 	void render(sf::RenderWindow& window);
 	void select();
 	void deselect();
+
+	const sf::Sprite& getSprite();
 
 	virtual const std::string getType();
 };
