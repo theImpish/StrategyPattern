@@ -9,7 +9,7 @@ void EntityManager::update()
 	for (std::shared_ptr<Missile> e : m_missilesToAdd)
 	{
 		m_missiles.push_back(e);
-		m_missileMap[e->m_tag].push_back(e);
+		m_missileMap[e->tag].push_back(e);
 	}
 
 	m_missilesToAdd.clear();
@@ -30,17 +30,29 @@ void EntityManager::removeMissiles(MissileVec& vec)
 		std::remove_if(vec.begin(), vec.end(), [](auto e) {return !e->m_isActive; })
 		, vec.end());
 }
-std::shared_ptr<Missile> EntityManager::addMissile(const std::string& tag, const sf::Texture& texture, Vec2 pos)
+
+std::shared_ptr<Missile> EntityManager::addMissile(const std::shared_ptr<Missile>& missile)
 {
-	auto missile = std::shared_ptr<Missile>(new Missile(m_game, m_totalMissiles++, tag, texture, pos));
-
-	m_missilesToAdd.push_back(missile);
-
-	return missile;
+		m_missilesToAdd.push_back(missile);
+		return missile;
 }
 const MissileVec& EntityManager::getMissiles()
 {
 	return m_missiles;
+}
+
+void EntityManager::selectMissile()
+{
+	for (int i = 0; i < m_missiles.size(); i++)
+	{
+		m_missiles[i]->deselect();
+		//m_missiles[i]->m_drawRectangle = false;
+		std::cout << m_missiles[i]->getType() << '\t' << m_missiles[i]->m_drawRectangle << '\n';
+	}
+
+	m_missiles[m_game->currentSelection]->select();
+	std::cout << m_missiles[m_game->currentSelection]->getType() << '\t' << m_missiles[m_game->currentSelection]->m_drawRectangle << '\n';
+
 }
 
 const MissileVec& EntityManager::getMissiles(const std::string& tag)

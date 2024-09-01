@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "GameConsts.h"
+
 Game::Game()
 {
 	m_entityManager = std::make_shared<EntityManager>(this);
@@ -52,7 +54,14 @@ void Game::setPaused()
 
 void Game::spawnPlayer()
 {
-	m_entityManager->addMissile("Small Blue", m_assets.getTexture("Small Blue"), Vec2(100,100));
+	//m_entityManager->addMissile("Small Blue", m_assets.getTexture("Small Blue"), Vec2(100,100));
+	m_entityManager->addMissile(std::make_shared<MissileBlue>(m_assets.getTexture("Small Blue")
+		, sf::Color(Game_Colours::SILVER)
+		, m_entityManager->m_totalMissiles++));
+	m_entityManager->addMissile(std::make_shared<MissileRed>(m_assets.getTexture("Medium Red")
+		, sf::Color(Game_Colours::TIMBERWOLF)
+		, m_entityManager->m_totalMissiles++));
+	
 }
 
 void Game::spawnEnemy()
@@ -82,7 +91,7 @@ void Game::sEnemySpawner()
 void Game::sRender()
 {
 
-	m_window.clear(m_assets.getColour("Imperial red"));
+	m_window.clear(sf::Color(Game_Colours::IMPERIAL_RED));
 
 	//m_text = sf::Text("Score: " + std::to_string(m_score), m_font, m_fontConfig.S);
 	//m_text.setPosition(10, 10);
@@ -90,7 +99,7 @@ void Game::sRender()
 
 	for (auto& m : m_entityManager->getMissiles())
 	{
-		m->display(m_window);
+		m->render(m_window);
 		//m_window.draw(m->getSprite());
 	}
 
@@ -121,13 +130,25 @@ void Game::sUserInput()
 			case sf::Keyboard::S:
 				break;
 			case sf::Keyboard::A:
+				if (currentSelection > 0) 
+				{
+					currentSelection--;
+					m_entityManager->selectMissile();
+					std::cout << "current selection: " << currentSelection << '\n';
+				}
 				break;
 			case sf::Keyboard::D:
+				if (currentSelection < m_entityManager->m_totalMissiles - 1) 
+				{
+					currentSelection++;
+					m_entityManager->selectMissile();
+					std::cout << "Total: " << m_entityManager->m_totalMissiles << " current selection: " << currentSelection << '\n';
+				}
 				break;
 			case sf::Keyboard::P:
 				setPaused();
 			case sf::Keyboard::R:
-				m_entityManager->getMissiles()[0]->drawRectangle();
+				//m_entityManager->getMissiles()[currentSelection]->drawRectangle();
 				break;
 			default: break;
 			}

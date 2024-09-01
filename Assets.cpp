@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 Assets::Assets()
 {
 	loadAssets();
@@ -15,11 +16,6 @@ const sf::Font& Assets::getFont(std::string name)
 const sf::Texture& Assets::getTexture(std::string name)
 {
 	return m_texture.find(name)->second;
-}
-
-const sf::Color& Assets::getColour(std::string name)
-{
-	return m_colours.find(name)->second;
 }
 
 void Assets::loadAssets()
@@ -85,25 +81,6 @@ void Assets::loadAssets()
 	{
 		addTexture(name, "assets/" + path);
 	}
-
-	std::map<std::string, uint32_t> colours
-	{
-	  {"Night",0x0b090aff}
-	 ,{"Eerie black",0x161a1dff}
-	 ,{"Blood red",0x660708ff}
-	 ,{"Cornell red",0xa4161aff}
-	 ,{"Cornell red 2",0xba181bff}
-	 ,{"Imperial red",0xe5383bff}
-	 ,{"Silver",0xb1a7a6ff}
-	 ,{"Timberwolf",0xd3d3d3ff}
-	 ,{"White smoke",0xf5f3f4ff}
-	 ,{"White",0xffffffff}
-	};
-
-	for (const auto& [name, hex] : colours)
-	{
-		addColour(name, hex);
-	}
 }
 
 void Assets::addFont(std::string name, std::string path)
@@ -130,9 +107,3 @@ void Assets::addTexture(std::string name, std::string path)
 	m_texture[name] = texture;
 }
 
-void Assets::addColour(std::string name, uint32_t hex)
-{
-	sf::Color colour(hex);
-
-	m_colours[name] = colour;
-}

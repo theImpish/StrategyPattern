@@ -11,26 +11,24 @@
 
 class Game
 {
+private:
 	sf::RenderWindow m_window;
-	bool m_paused = false;
-	bool m_running = true;
 	std::shared_ptr<EntityManager> m_entityManager = nullptr;
-	Assets m_assets;
-
 
 	sf::Font m_font;
 	sf::Text m_text;
 
-	//int m_score = 0;
+	bool m_paused = false;
+	bool m_running = true;
 	int m_currentFrame = 0;
-	//int m_lastEnemySpawnTime = 0;
 
-	//int m_bulletFadeOutRatio;
-	//int m_smallEnemyFadeOutRatio;
-	//int m_specialSpread;
-
+	Assets m_assets;
 	std::shared_ptr<Entity> m_player;
 
+public:
+	int currentSelection = 0;
+
+private:
 	void init();
 	void setPaused();
 
@@ -43,7 +41,6 @@ class Game
 
 	void spawnPlayer();
 	void spawnEnemy();
-
 
 public:
 

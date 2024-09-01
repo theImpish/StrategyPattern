@@ -1,39 +1,44 @@
 #pragma once
 
-#include "Game.h"
+//#include "Game.h"
 
 #include "SFML/Graphics.hpp"
 #include "Vec2.h"
 
 #include <iostream>
 
-class Game;
-
 class Missile
 {
 	friend class EntityManager;
 private:
 
-	bool m_isActive = true;
-	bool m_drawRectangle = true;
-	size_t m_id = 0;
-	std::string m_tag = "missile";
-
 	Vec2 m_size;
 	sf::Sprite m_sprite;
+	sf::Texture m_texture;
 	sf::RectangleShape m_rectangle;
+	sf::Color m_colour;
 
-	Game* m_game = nullptr;
+	size_t m_id = 0;
+	
+	bool m_drawRectangle = true;
+	bool m_isActive = true;
 
 public:
+	std::string tag = "missile";
 
-	Missile(Game* game, const size_t id, const std::string tag, const sf::Texture& texture, Vec2 pos);
+private:
+	void initSprite();
+	void initSelector();
+public:
 
-	void display(sf::RenderWindow& window);
-	void drawRectangle();
-	void swim();
+	Missile(const sf::Texture& texture, const sf::Color& colour, size_t id);
 
-	const sf::Sprite& getSprite();
+	void init();
+	void setPosition(Vec2 pos);
 
-	void update(Vec2 pos);
+	void render(sf::RenderWindow& window);
+	void select();
+	void deselect();
+
+	virtual const std::string getType();
 };
