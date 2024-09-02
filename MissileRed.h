@@ -18,5 +18,4 @@ private:
 
 public:
 	MissileRed(const sf::Texture& texture, const sf::Color& colour, size_t id);
-
 };
